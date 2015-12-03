@@ -7,8 +7,8 @@
   <title>Connect 4</title>
   <meta name="description" content="Connect4 game">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  
+
+
   <!-- build:js http://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js -->
   <script crossorigin="anonymous" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.js"></script>
   <!-- /build -->
@@ -25,17 +25,17 @@
   <!-- /build -->
 
   <!-- build:js dist/everything.min.js -->
-  <script crossorigin="anonymous" src="gameLogic.js"></script>
-  <script crossorigin="anonymous" src="game.js"></script>
-  
+  <script src="gameLogic.js"></script>
+  <script src="game.js"></script>
+
   <!-- /build -->
   <script>
   window.angularTranslationLanguages = ['en', 'hn'];
   </script>
   <!-- build:js http://yoav-zibin.github.io/emulator/dist/turnBasedServices.2.min.js -->
-  <script crossorigin="anonymous" src="http://yoav-zibin.github.io/emulator/dist/turnBasedServices.2.js"></script>
+  <script crossorigin="anonymous" src="http://yoav-zibin.github.io/emulator/dist/turnBasedServices.3.js"></script>
   <!-- /build -->
- 
+
   <link rel="stylesheet" type="text/css" href="http://yoav-zibin.github.io/emulator/main.css">
   <link rel="stylesheet" type="text/css" href="game.css">
 </head>
@@ -53,7 +53,7 @@
         <div class="modal-header">
           <button type="button" class="close" ng-click="isHelpModalShown = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">
-            {{ 'RULES_OF_CONNECT4' | translate }}
+            {{ 'RULES_OF_CONNECT4'}}
           </h4>
         </div>
         <div class="modal-body">
@@ -62,7 +62,7 @@
               <table>
                 <tr>
                   <td>
-                    {{ 'RULES_SLIDE1' | translate }}
+                    {{ 'RULES_SLIDE1'  }}
                   </td>
                   <td>
                     <img src="img/HelpSlide1.png" style="height:100px;">
@@ -74,7 +74,7 @@
               <table>
                 <tr>
                   <td>
-                  {{ 'RULES_SLIDE2' | translate }}
+                  {{ 'RULES_SLIDE2'  }}
                   </td>
                   <td>
                     <img src="img/HelpSlide2.png" style="height:100px;">
@@ -86,7 +86,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" ng-click="isHelpModalShown = false">
-            {{ 'CLOSE' | translate }}
+            {{ 'CLOSE'  }}
           </button>
         </div>
       </div>
@@ -112,7 +112,7 @@
     </svg>
 
      <img ng-attr-width="{{100 / colsNum}}%" ng-attr-height="{{100 / rowsNum}}%"
-      id="clickToDragPiece" 
+      id="clickToDragPiece"
       ng-src="{{getPreviewSrc()}}"
 
       style="display:none; position:absolute; z-index: 31; width:{{100 / 7}}%" />
@@ -122,12 +122,12 @@
       <img ng-repeat="col in cols" src="img/block1.png"
         style="position:absolute;  top:0; left:{{col * 100 / 7}}%; width:{{100 / 7}}%; height:100%;"
         ng-class = "getSquareClass(row, col)">
-         <div ng-repeat="col in cols" style=" position:absolute;  top:9%; left:{{(col * 100 / 7)+1}}%; width:{{(100 / 7)-2}}%; height:78%" 
+         <div ng-repeat="col in cols" style=" position:absolute;  top:9%; left:{{(col * 100 / 7)+1}}%; width:{{(100 / 7)-2}}%; height:78%"
          ng-click="cellClicked(row, col)"
         id="{{'e2e_test_div_' + row + 'x' + col}}"
          >
-          <img ng-class="{piece: true, rot: true, slowlyAppear: shouldSlowlyAppear(row, col) 
-     
+          <img ng-class="{piece: true, rot: true, slowlyAppear: shouldSlowlyAppear(row, col)
+
     }"
           ng-show="shouldShowImage(row, col)"
           ng-src="{{getImageSrc(row, col)}}"
@@ -137,19 +137,19 @@
     </div>
 
 
-      
 
-    </div> 
+
+    </div>
       <!-- <div ng-class="{cell:true}">
         <img src = "img/block1.png" div ng-class ="{cell:true}" ng-show = "oddSum(row, col)">
         <img src = "img/block1.png" ng-class = "{cell:true}" ng-show = "evenSum(row, col)">
        <img src = "img/red.png" ng-class ="{posit2: true, rot: true, slowlyAppear: shouldSlowlyAppear(row, col)}" ng-show = "isBlack(row, col)">
-        <img src = "img/blue.png" ng-class ="{posit3: true,  rot: true, slowlyAppear: shouldSlowlyAppear(row, col)}" ng-show = "isWhite(row, col)"> 
+        <img src = "img/blue.png" ng-class ="{posit3: true,  rot: true, slowlyAppear: shouldSlowlyAppear(row, col)}" ng-show = "isWhite(row, col)">
       </div> -->
- 
 
 
-      
+
+
   </div>
 </body>
 </html>

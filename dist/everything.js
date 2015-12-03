@@ -2,7 +2,7 @@ var h=6;//Rows
 var w=7;//Columns
 
 'use strict';
-angular.module('myApp',['ngTouch', 'ui.bootstrap']).factory('gameLogic', function() {
+angular.module('myApp',['ngTouch', 'ui.bootstrap', 'gameServices']).factory('gameLogic', function() {
 function isEqual(object1, object2) {
   //console.log(JSON.stringify(object1));
   //console.log(JSON.stringify(object2));
@@ -307,7 +307,7 @@ function isMoveOk(params) {
     return true;
   }
 
-  
+
   return {
     isMoveOk : isMoveOk,
 getExampleGame : getExampleGame,
@@ -322,10 +322,10 @@ createComputerMove :createComputerMove
 ;
 angular.module('myApp')
 .controller('Ctrl', ['$scope','$rootScope', '$log', '$timeout',
-       'gameService', 'gameLogic', 'resizeGameAreaService','dragAndDropService', function (
+        'gameLogic',  function (
    $scope, $rootScope, $log, $timeout,
-  gameService, gameLogic, resizeGameAreaService,dragAndDropService) {
-    'use strict';  
+   gameLogic) {
+    'use strict';
 
         resizeGameAreaService.setWidthToHeight(1.16667);
 
@@ -368,7 +368,7 @@ angular.module('myApp')
 
          canMakeMove = params.turnIndexAfterMove >= 0 && // game is ongoing
         params.yourPlayerIndex === params.turnIndexAfterMove; // it's my turn
-          
+
 
         $scope.isYourTurn = params.turnIndexAfterMove >= 0 && // game is ongoing
         params.yourPlayerIndex === params.turnIndexAfterMove; //it's my turn
@@ -381,7 +381,7 @@ angular.module('myApp')
           }
         }
 
-        
+
 
         updateUI({stateAfterMove: {}, turnIndexAfterMove: 0, yourPlayerIndex: -2});
 
@@ -461,7 +461,7 @@ angular.module('myApp')
       var cell = $scope.board[row][col];
       return cell === "R" ? "img/red.png"
           : cell === "B" ? "img/blue.png" : "";
-        };        
+        };
 
         function handleDragEvent(type, clientX, clientY) {
       //if not your turn, dont handle event
@@ -480,7 +480,7 @@ angular.module('myApp')
 
       clickToDragPiece.style.display = "inline";
       draggingLines.style.display = "inline";
-      
+
       // Inside gameArea. Let's find the containing square's row and col
       var col = Math.floor(colsNum * x / gameArea.clientWidth);
       var row = Math.floor(rowsNum * y / gameArea.clientHeight);
