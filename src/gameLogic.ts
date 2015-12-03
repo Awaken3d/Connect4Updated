@@ -1,26 +1,29 @@
-var h=6;//Rows
-var w=7;//Columns
+//var h=6;//Rows
+//var w=7;//Columns
 
-'use strict';
-angular.module('myApp',['ngTouch', 'ui.bootstrap', 'gameServices']).factory('gameLogic', function() {
-function isEqual(object1, object2) {
+//'use strict';
+//angular.module('myApp',['ngTouch', 'ui.bootstrap', 'gameServices']).factory('gameLogic', function() {
+module gameLogic {
+  var h=6;//Rows
+  var w=7;//Columns
+export function isEqual(object1:any, object2:any) {
   //console.log(JSON.stringify(object1));
   //console.log(JSON.stringify(object2));
 
     return angular.equals(object1, object2);
   }
 
-  function copyObject(object) {
+  export function copyObject(object:any) {
     return angular.copy(object);
   }
- 
+
   /** Return the winner (either 'R' or 'B') or '' if there is no winner. */
-  function getWinner(board) {
+  export function getWinner(board:any) {
 
     var count=0;
 
 
-    function p(y, x) {
+    function p(y:any, x:any) {
   return (y < 0 || x < 0 || y >= h || x >= w) ? 0 : board[y][x];
 }
  //loops through rows, columns, diagonals, etc
@@ -61,8 +64,8 @@ if(p(y,x)!==0&&p(y,x)!==''&&  p(y,x)===p(y+1*d,x+1) && p(y,x)===p(y+2*d,x+2) && 
   }
   }
 }
-function isTie(board) {
-    var i, j;
+export function isTie(board:any) {
+    var i:any, j:any;
     for (i = 0; i < 5; i++) {
       for (j = 0; j < 6; j++) {
         if (board[i][j] === '') {
@@ -76,7 +79,7 @@ function isTie(board) {
   }
 
 
-  function getInitialBoard(){
+  export function getInitialBoard(){
 
     return  [['', '', '','','','',''],
     ['', '', '','','','',''],
@@ -86,9 +89,9 @@ function isTie(board) {
     ['', '', '','','','','']];
   }
 
-  function createComputerMove(board, turnIndexBeforeMove) {
-      var possibleMoves = [];
-      var i, j;
+  export function createComputerMove(board:any, turnIndexBeforeMove:any) {
+      var possibleMoves:any = [];
+      var i:any, j:any;
       for (i = 0; i < 6; i++) {
         for (j = 0; j <7 ; j++) {
           try {
@@ -114,7 +117,7 @@ function isTie(board) {
 
 
 
-  function createMove(board, row, col, turnIndexBeforeMove) {
+  export function createMove(board:any, row:any, col:any, turnIndexBeforeMove:any) {
     if (board === undefined) {
       // Initially (at the beginning of the match), the board in state is undefined.
       board = [['', '', '','','','',''],
@@ -145,13 +148,13 @@ function isTie(board) {
 
 
     var boardAfterMove = copyObject(board);
-boardAfterMove[row][col] = turnIndexBeforeMove === 0 ? 'R' : 'B';
+    boardAfterMove[row][col] = turnIndexBeforeMove === 0 ? 'R' : 'B';
     var winner = getWinner(boardAfterMove);
-    var firstOperation;
+    var firstOperation:any;
     if (winner !== '' || isTie(board)) {
       // Game over.
       firstOperation = {endMatch: {endMatchScores:
-(winner === 'R' ? [1, 0] : (winner === 'B' ? [0, 1] : [0, 0]))}};
+      (winner === 'R' ? [1, 0] : (winner === 'B' ? [0, 1] : [0, 0]))}};
     } else {
       // Game continues. Now it's the opponent's turn (the turn switches from 0 to 1 and 1 to 0).
       firstOperation = {setTurn: {turnIndex: 1 - turnIndexBeforeMove}};
@@ -163,8 +166,8 @@ boardAfterMove[row][col] = turnIndexBeforeMove === 0 ? 'R' : 'B';
 
 
   /** Returns an array of {stateBeforeMove, move, comment}. */
-  function getExampleMoves(initialTurnIndex, initialState, arrayOfRowColComment) {
-    var exampleMoves = [];
+  export function getExampleMoves(initialTurnIndex:any, initialState:any, arrayOfRowColComment:any) {
+    var exampleMoves:any = [];
     var state = initialState;
     var turnIndex = initialTurnIndex;
     for (var i = 0; i < arrayOfRowColComment.length; i++) {
@@ -181,7 +184,7 @@ boardAfterMove[row][col] = turnIndexBeforeMove === 0 ? 'R' : 'B';
     return exampleMoves;
   }
 
-  function getRiddles() {
+  export function getRiddles() {
     return [
       getExampleMoves(0,
         {
@@ -220,7 +223,7 @@ boardAfterMove[row][col] = turnIndexBeforeMove === 0 ? 'R' : 'B';
 
 
 
-  function getExampleGame() {
+  export function getExampleGame() {
     return getExampleMoves(0, {}, [
       {row: 5, col: 4 , comment: "The classic opening is to put R in the middle"},
       {row: 5, col: 3, comment: "Place B adjacent to R"},
@@ -252,7 +255,7 @@ boardAfterMove[row][col] = turnIndexBeforeMove === 0 ? 'R' : 'B';
 
 
 
-function isMoveOk(params) {
+export function isMoveOk(params:any) {
     var move = params.move;
     var turnIndexBeforeMove = params.turnIndexBeforeMove;
     var stateBeforeMove = params.stateBeforeMove;
@@ -308,14 +311,20 @@ function isMoveOk(params) {
   }
 
 
+ }
+
+
+
+
+
+angular.module('myApp',['ngTouch', 'ui.bootstrap', 'gameServices']).factory('gameLogic', function() {
   return {
-    isMoveOk : isMoveOk,
-getExampleGame : getExampleGame,
-getRiddles : getRiddles,
-getInitialBoard:getInitialBoard,
-createMove :createMove,
-createComputerMove :createComputerMove
+isMoveOk : gameLogic.isMoveOk,
+getExampleGame : gameLogic.getExampleGame,
+getRiddles : gameLogic.getRiddles,
+getInitialBoard:gameLogic.getInitialBoard,
+createMove :gameLogic.createMove,
+createComputerMove :gameLogic.createComputerMove
 
-  }
-
+  };
 });

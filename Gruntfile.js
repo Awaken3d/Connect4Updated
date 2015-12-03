@@ -16,8 +16,8 @@ module.exports = function(grunt) {
     // Run karma and watch files using:
     // grunt karma:unit:start watch
     watch: {
-      files: ['src/*.js','gameLogic.js'],
-      tasks: [ 'karma:unit:run']
+      files: ['src/*.js'],
+      tasks: ['karma:unit:run']
     },
     concat: {
       options: {
@@ -25,10 +25,11 @@ module.exports = function(grunt) {
       },
       dist: {
         // Order is important! gameLogic.js must be first because it defines myApp angular module.
-        src: ['gameLogic.js', 'game.js',],
-        dest: 'dist/everything.js',
+        src: ['./ts_output_readonly_do_NOT_change_manually/src/gameLogic.js', './ts_output_readonly_do_NOT_change_manually/src/game.js'],
+        dest: './dist/everything.js',
       },
     },
+
     uglify: {
       options: {
         sourceMap: true,
@@ -39,6 +40,7 @@ module.exports = function(grunt) {
         }
       }
     },
+
     processhtml: {
       dist: {
         files: {
@@ -46,34 +48,39 @@ module.exports = function(grunt) {
         }
       }
     },
+
     manifest: {
       generate: {
         options: {
           basePath: '.',
           cache: [
             'http://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js',
-           // 'http://yoav-zibin.github.io/emulator/dist/gameServices.min.js',
-            //'http://yoav-zibin.github.io/emulator/angular-translate/angular-translate.2.6.1.min.js',
-            //'languages/en.js',
-              'http://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-touch.min.js' ,
+            'http://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-touch.min.js',
             'http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js',
             'http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css',
             'http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/fonts/glyphicons-halflings-regular.woff',
             'http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/fonts/glyphicons-halflings-regular.ttf',
             'http://yoav-zibin.github.io/emulator/dist/turnBasedServices.3.min.js',
             'http://yoav-zibin.github.io/emulator/main.css',
-
-             'img/block1.png', 'img/red.png', 'img/blue.png',
-           'img/HelpSlide1.png',
-            'img/HelpSlide2.png',
-            'dist/everything.min.js',
+            'dist/everything.js',
             'game.css',
-             'languages/en.js',
-             'languages/hn.js'
-
+            //'button.gif',
+            //'green.png',
+            //'red.png',
+            //'backGround.jpg',
+            //'imgs/1.jpg',
+            //'imgs/2.jpg',
+            //'imgs/3.jpg',
+            //'imgs/4.jpg',
+            //'imgs/5.jpg',
+            //'imgs/6.jpg',
+            //'imgs/7.jpg',
+            //'imgs/8.jpg',
           ],
-          network: ['dist/everything.min.js.map', 'dist/everything.js','languages/en.js',
-            'languages/hn.js',],
+          network: [
+            'languages/en.js',
+            'languages/zh.js',
+          ],
           timestamp: true
         },
         dest: 'game.appcache',
@@ -94,34 +101,23 @@ module.exports = function(grunt) {
             // run in parallel with other tasks
             runInBackground: true
         }
-    },
-    protractor: {
-      options: {
-        configFile: "protractor.conf.js", // Default config file
-        keepAlive: true, // If false, the grunt process stops when the test fails.
-        noColor: false, // If true, protractor will not use colors in its output.
-        args: {
-          // Arguments passed to the command
-        }
-      },
-      all: {}
-    },
+    }
+
   });
 
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
+  //grunt.loadNpmTasks('grunt-contrib-watch');
+  //grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-processhtml');
   grunt.loadNpmTasks('grunt-manifest');
   grunt.loadNpmTasks('grunt-http-server');
-  grunt.loadNpmTasks('grunt-protractor-runner');
+  //grunt.loadNpmTasks('grunt-protractor-runner');
 
   // Default task(s).
   grunt.registerTask('default', [ 'karma',
-      'concat', 'uglify',
-      'processhtml', 'manifest',
-      'http-server', 'protractor']);
+      'concat', 'uglify','processhtml', 'manifest',
+      'http-server']);
 
 };

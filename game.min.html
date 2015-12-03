@@ -17,15 +17,16 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js"></script>
 
   <script src="dist/everything.min.js"></script>
-  <script>
+  <!--<script>
   window.angularTranslationLanguages = ['en', 'hn'];
-  </script>
-  <script src="http://yoav-zibin.github.io/emulator/dist/turnBasedServices.2.min.js"></script>
+</script>-->
+  <script src="http://yoav-zibin.github.io/emulator/dist/turnBasedServices.3.min.js"></script>
 
   <link rel="stylesheet" type="text/css" href="http://yoav-zibin.github.io/emulator/main.css">
   <link rel="stylesheet" type="text/css" href="game.css">
 </head>
-<body ng-cloak ng-controller="Ctrl">
+<!--<body ng-cloak ng-controller="Ctrl">-->
+  <body ng-cloak>
 
   <div style="position:absolute; bottom:5px; left: 5px">
     <span ng-click="isHelpModalShown = true"
@@ -39,7 +40,7 @@
         <div class="modal-header">
           <button type="button" class="close" ng-click="isHelpModalShown = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">
-            {{ 'RULES_OF_CONNECT4'}}
+            {{ 'RULES_OF_CONNECT4' | translate}}
           </h4>
         </div>
         <div class="modal-body">
@@ -48,7 +49,7 @@
               <table>
                 <tr>
                   <td>
-                    {{ 'RULES_SLIDE1'  }}
+                    {{ 'RULES_SLIDE1' | translate }}
                   </td>
                   <td>
                     <img src="img/HelpSlide1.png" style="height:100px;">
@@ -60,7 +61,7 @@
               <table>
                 <tr>
                   <td>
-                  {{ 'RULES_SLIDE2'  }}
+                  {{ 'RULES_SLIDE2' | translate }}
                   </td>
                   <td>
                     <img src="img/HelpSlide2.png" style="height:100px;">
@@ -72,7 +73,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" ng-click="isHelpModalShown = false">
-            {{ 'CLOSE'  }}
+            {{ 'CLOSE' | translate }}
           </button>
         </div>
       </div>
@@ -97,26 +98,26 @@
             stroke-width="2%"/>
     </svg>
 
-     <img ng-attr-width="{{100 / colsNum}}%" ng-attr-height="{{100 / rowsNum}}%"
+     <img ng-attr-width="{{100 / game.colsNum}}%" ng-attr-height="{{100 / game.rowsNum}}%"
       id="clickToDragPiece"
-      ng-src="{{getPreviewSrc()}}"
+      ng-src="{{game.getPreviewSrc()}}"
 
       style="display:none; position:absolute; z-index: 31; width:{{100 / 7}}%" />
 
-     <div ng-repeat="row in rows"
+     <div ng-repeat="row in game.rows"
         style="position:absolute;  top:{{row * 100 / 6}}%; left:0%; width:100%; height:{{100 / 6}}%;">
-      <img ng-repeat="col in cols" src="img/block1.png"
+      <img ng-repeat="col in game.cols" src="img/block1.png"
         style="position:absolute;  top:0; left:{{col * 100 / 7}}%; width:{{100 / 7}}%; height:100%;"
-        ng-class = "getSquareClass(row, col)">
-         <div ng-repeat="col in cols" style=" position:absolute;  top:9%; left:{{(col * 100 / 7)+1}}%; width:{{(100 / 7)-2}}%; height:78%"
-         ng-click="cellClicked(row, col)"
+        ng-class = "game.getSquareClass(row, col)">
+         <div ng-repeat="col in game.cols" style=" position:absolute;  top:9%; left:{{(col * 100 / 7)+1}}%; width:{{(100 / 7)-2}}%; height:78%"
+         ng-click="game.cellClicked(row, col)"
         id="{{'e2e_test_div_' + row + 'x' + col}}"
          >
-          <img ng-class="{piece: true, rot: true, slowlyAppear: shouldSlowlyAppear(row, col)
+          <img ng-class="{piece: true, rot: true, slowlyAppear: game.shouldSlowlyAppear(row, col)
 
     }"
-          ng-show="shouldShowImage(row, col)"
-          ng-src="{{getImageSrc(row, col)}}"
+          ng-show="game.shouldShowImage(row, col)"
+          ng-src="{{game.getImageSrc(row, col)}}"
           id="{{'e2e_test_img_' + row + 'x' + col}}"
           >
       </div>
